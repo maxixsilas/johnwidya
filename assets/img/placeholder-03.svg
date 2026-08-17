@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 1000" width="750" height="1000" role="img" aria-label="Photo 03 placeholder">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="0.6" y2="1">
+<stop offset="0" stop-color="#A6B2AC"/><stop offset="1" stop-color="#66746E"/>
+</linearGradient>
+<filter id="s"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="6"/><feColorMatrix type="saturate" values="0"/></filter>
+</defs>
+<rect width="750" height="1000" fill="url(#g)"/>
+<rect width="750" height="1000" filter="url(#s)" opacity="0.05"/>
+<g fill="none" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="1.1">
+<path d="M375.0 340.0 C 495.0 380.0, 540.0 500.0, 375.0 620.0 C 210.00000000000003 500.0, 255.00000000000003 380.0, 375.0 340.0 Z"/>
+<path d="M375.0 340.0 L 375.0 680.0"/>
+<path d="M375.0 440.0 C 315.0 420.0, 285.0 470.0, 300.0 500.0"/>
+<path d="M375.0 520.0 C 434.99999999999994 500.0, 465.0 550.0, 450.0 580.0"/>
+</g>
+<circle cx="375.0" cy="480.0" r="225.0" fill="none" stroke="#FFFFFF" stroke-opacity="0.28"/>
+<text x="375.0" y="800.0" text-anchor="middle" font-family="Jost, Helvetica, sans-serif" font-size="33" letter-spacing="9" fill="#FFFFFF" fill-opacity="0.78">PHOTO 03</text>
+</svg>

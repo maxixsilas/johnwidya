@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5">
+<meta name="theme-color" content="#F7F6F3">
+<title>John &amp; Widya — Wedding Invitation</title>
+
+<meta name="description" content="With the blessing of our families, we invite you to share in the joy of our wedding day. 26 October 2026, Bali.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="John &amp; Widya — Wedding Invitation">
+<meta property="og:description" content="26 October 2026 · Hilton Bali Resort, Nusa Dua">
+<meta property="og:image" content="assets/img/placeholder-cover.svg">
+<meta name="format-detection" content="telephone=no">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Gowun+Batang:wght@400;700&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+<!-- ══ COVER ══════════════════════════════════════════════════════════ -->
+<section class="cover" id="cover">
+  <div class="cover__media"><img id="coverImg" alt="" fetchpriority="high"></div>
+  <div class="cover__scrim"></div>
+  <div class="cover__inner">
+    <p class="eyebrow eyebrow--light" data-c="eyebrow">The Wedding Of</p>
+    <h1 class="cover__names">
+      <span data-c="groomShort">John</span>
+      <span class="cover__amp">&amp;</span>
+      <span data-c="brideShort">Widya</span>
+    </h1>
+    <div class="cover__rule" aria-hidden="true"></div>
+    <p class="cover__date" data-c="coverDate">26 . 10 . 2026</p>
+    <p class="cover__venue" data-c="coverVenue">Hilton Bali Resort</p>
+
+    <div class="cover__guest" id="guestBlock" hidden>
+      <p class="cover__guestLabel">Dear</p>
+      <p class="cover__guestName" id="guestName"></p>
+    </div>
+
+    <button class="btn btn--open" id="openBtn" type="button">
+      <span>Open Invitation</span>
+    </button>
+  </div>
+</section>
+
+<!-- ══ MAIN ═══════════════════════════════════════════════════════════ -->
+<main class="page" id="page">
+
+  <!-- Verse -->
+  <section class="sec sec--verse reveal">
+    <p class="verse" data-c="verse"></p>
+    <p class="verse__ref" data-c="verseRef"></p>
+  </section>
+
+  <div class="rule reveal"></div>
+
+  <!-- Bride & Groom -->
+  <section class="sec" id="couple">
+    <p class="eyebrow reveal">Bride &amp; Groom</p>
+    <p class="sec__lead reveal" data-c="invitation"></p>
+
+    <article class="person reveal">
+      <div class="person__photo"><img id="groomImg" alt="" loading="lazy"></div>
+      <h2 class="person__name" data-c="groomName"></h2>
+      <p class="person__role">Groom</p>
+      <p class="person__parents">
+        <span data-c="groomOrder"></span><br>
+        <strong data-c="groomFather"></strong> &amp; <strong data-c="groomMother"></strong>
+      </p>
+      <a class="ig" data-c="groomIg" hidden target="_blank" rel="noopener">Instagram</a>
+    </article>
+
+    <div class="person__amp" aria-hidden="true">&amp;</div>
+
+    <article class="person reveal">
+      <div class="person__photo"><img id="brideImg" alt="" loading="lazy"></div>
+      <h2 class="person__name" data-c="brideName"></h2>
+      <p class="person__role">Bride</p>
+      <p class="person__parents">
+        <span data-c="brideOrder"></span><br>
+        <strong data-c="brideFather"></strong> &amp; <strong data-c="brideMother"></strong>
+      </p>
+      <a class="ig" data-c="brideIg" hidden target="_blank" rel="noopener">Instagram</a>
+    </article>
+  </section>
+
+  <!-- ══ SIGNATURE: calendar + countdown ══ -->
+  <section class="sec sec--calendar" id="date">
+    <p class="eyebrow reveal">Save The Date</p>
+    <h2 class="script reveal" id="calMonth">October 2026</h2>
+
+    <div class="cal reveal" id="calendar">
+      <div class="cal__head" id="calHead"></div>
+      <div class="cal__grid" id="calGrid"></div>
+    </div>
+
+    <p class="cal__caption reveal">
+      <span data-c="dateLabel"></span><br>
+      <span data-c="timeLabel"></span>
+    </p>
+
+    <div class="countdown reveal" id="countdown" aria-live="polite">
+      <div class="cd"><span class="cd__num" id="cdD">000</span><span class="cd__lab">Days</span></div>
+      <div class="cd"><span class="cd__num" id="cdH">00</span><span class="cd__lab">Hours</span></div>
+      <div class="cd"><span class="cd__num" id="cdM">00</span><span class="cd__lab">Minutes</span></div>
+      <div class="cd"><span class="cd__num" id="cdS">00</span><span class="cd__lab">Seconds</span></div>
+    </div>
+
+    <button class="btn btn--ghost reveal" id="calBtn" type="button">Add to Google Calendar</button>
+  </section>
+
+  <!-- Gallery -->
+  <section class="sec sec--gallery" id="gallery">
+    <p class="eyebrow reveal">Our Moments</p>
+    <div class="gal" id="gal"></div>
+  </section>
+
+  <!-- Video (hidden unless configured) -->
+  <section class="sec reveal" id="videoSec" hidden>
+    <p class="eyebrow">Our Story</p>
+    <div class="video"><video id="preVideo" controls playsinline preload="none"></video></div>
+  </section>
+
+  <!-- Event details -->
+  <section class="sec" id="event">
+    <p class="eyebrow reveal">Event Details</p>
+    <h2 class="script reveal">The Celebration</h2>
+
+    <ul class="sched reveal" id="sched"></ul>
+
+    <p class="dress reveal">
+      <span class="dress__lab">Dress code</span>
+      <span class="dress__val" data-c="dressCode"></span>
+    </p>
+  </section>
+
+  <!-- Venue / Maps -->
+  <section class="sec sec--venue" id="venue">
+    <p class="eyebrow reveal">Location</p>
+    <h2 class="script reveal" data-c="venueName"></h2>
+    <p class="venue__hall reveal" data-c="venueHall"></p>
+
+    <div class="map reveal"><iframe id="mapFrame" title="Map to the wedding venue" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+
+    <a class="venue__addr reveal" id="mapLink" target="_blank" rel="noopener">
+      <span data-c="venueAddr"></span>
+      <span class="venue__area" data-c="venueArea"></span>
+      <span class="venue__cta">Open in Google Maps</span>
+    </a>
+  </section>
+
+  <div class="rule reveal"></div>
+
+  <!-- RSVP -->
+  <section class="sec sec--rsvp" id="rsvp">
+    <p class="eyebrow reveal">RSVP</p>
+    <h2 class="script reveal">Will You Join Us?</h2>
+    <p class="sec__lead reveal">Kindly let us know before <strong data-c="deadline"></strong> so we can prepare a seat for you.</p>
+
+    <form class="form reveal" id="rsvpForm" novalidate>
+      <label class="field">
+        <span class="field__lab">Full name</span>
+        <input type="text" id="fName" name="name" required maxlength="80" autocomplete="name" placeholder="Your name">
+      </label>
+
+      <fieldset class="field field--choice">
+        <legend class="field__lab">Will you attend?</legend>
+        <div class="choice">
+          <input type="radio" id="attYes" name="attendance" value="Attending" required>
+          <label for="attYes">Yes, I'll be there</label>
+          <input type="radio" id="attNo" name="attendance" value="Not Attending">
+          <label for="attNo">Sorry, I can't</label>
+        </div>
+      </fieldset>
+
+      <label class="field" id="guestsField">
+        <span class="field__lab">Number of guests</span>
+        <select id="fGuests" name="guests"></select>
+      </label>
+
+      <label class="field">
+        <span class="field__lab">Wishes for the couple</span>
+        <textarea id="fMessage" name="message" rows="4" maxlength="500" placeholder="Write something kind…"></textarea>
+        <span class="field__count"><span id="charCount">0</span>/500</span>
+      </label>
+
+      <!-- honeypot: hidden from people, catches bots -->
+      <input type="text" id="fWebsite" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+
+      <button class="btn btn--solid" type="submit" id="submitBtn">Send RSVP</button>
+      <p class="form__msg" id="formMsg" role="status"></p>
+    </form>
+  </section>
+
+  <!-- Wishes -->
+  <section class="sec sec--wishes" id="wishes">
+    <p class="eyebrow reveal">Wedding Wishes</p>
+    <p class="wishes__count reveal"><span id="wishCount">—</span> messages so far</p>
+
+    <div class="wishes" id="wishList">
+      <p class="wishes__empty" id="wishEmpty">Loading wishes…</p>
+    </div>
+    <button class="btn btn--ghost" id="moreBtn" type="button" hidden>Show more</button>
+  </section>
+
+  <div class="rule reveal"></div>
+
+  <!-- Gift -->
+  <section class="sec sec--gift" id="gift">
+    <p class="eyebrow reveal">Wanna give us some gifts?</p>
+    <p class="sec__lead reveal" data-c="giftIntro"></p>
+    <div class="gift" id="giftList"></div>
+  </section>
+
+  <!-- Closing -->
+  <section class="closing" id="closing">
+    <div class="closing__media"><img id="closingImg" alt="" loading="lazy"></div>
+    <div class="closing__scrim"></div>
+    <div class="closing__inner">
+      <p class="closing__text reveal" data-c="closingText"></p>
+      <h2 class="closing__thanks reveal" data-c="thanks"></h2>
+      <p class="closing__names reveal">
+        <span data-c="groomShort2"></span> &amp; <span data-c="brideShort2"></span>
+      </p>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>Made with love · <span data-c="footNames"></span> · 2026</p>
+  </footer>
+</main>
+
+<!-- Floating music button -->
+<button class="music" id="musicBtn" type="button" aria-label="Play background music" hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l10-2v13" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="6.5" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="16.5" cy="16" r="2.5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+</button>
+<audio id="bgm" loop preload="none"></audio>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

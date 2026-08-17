@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-label="Closing photo placeholder">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="0.6" y2="1">
+<stop offset="0" stop-color="#7F958C"/><stop offset="1" stop-color="#3F4C47"/>
+</linearGradient>
+<filter id="s"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="8"/><feColorMatrix type="saturate" values="0"/></filter>
+</defs>
+<rect width="900" height="1200" fill="url(#g)"/>
+<rect width="900" height="1200" filter="url(#s)" opacity="0.05"/>
+<g fill="none" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="1.1">
+<path d="M450.0 408.00000000000006 C 594.0 456.0, 648.0 600.0, 450.0 744.0 C 252.00000000000003 600.0, 306.0 456.0, 450.0 408.00000000000006 Z"/>
+<path d="M450.0 408.00000000000006 L 450.0 816.0000000000001"/>
+<path d="M450.0 528.0 C 378.0 504.0, 342.0 564.0, 360.0 600.0"/>
+<path d="M450.0 624.0 C 522.0 600.0, 558.0 660.0, 540.0 696.0"/>
+</g>
+<circle cx="450.0" cy="576.0" r="270.0" fill="none" stroke="#FFFFFF" stroke-opacity="0.28"/>
+<text x="450.0" y="960.0" text-anchor="middle" font-family="Jost, Helvetica, sans-serif" font-size="40" letter-spacing="10" fill="#FFFFFF" fill-opacity="0.78">CLOSING PHOTO</text>
+</svg>

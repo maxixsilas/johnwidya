@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" width="1000" height="750" role="img" aria-label="Photo 01 placeholder">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="0.6" y2="1">
+<stop offset="0" stop-color="#9DAFA6"/><stop offset="1" stop-color="#5E7069"/>
+</linearGradient>
+<filter id="s"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="4"/><feColorMatrix type="saturate" values="0"/></filter>
+</defs>
+<rect width="1000" height="750" fill="url(#g)"/>
+<rect width="1000" height="750" filter="url(#s)" opacity="0.05"/>
+<g fill="none" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="1.1">
+<path d="M500.0 255.00000000000003 C 660.0 285.0, 720.0 375.0, 500.0 465.0 C 280.0 375.0, 340.0 285.0, 500.0 255.00000000000003 Z"/>
+<path d="M500.0 255.00000000000003 L 500.0 510.00000000000006"/>
+<path d="M500.0 330.0 C 420.0 315.0, 380.0 352.5, 400.0 375.0"/>
+<path d="M500.0 390.0 C 580.0 375.0, 620.0 412.50000000000006, 600.0 434.99999999999994"/>
+</g>
+<circle cx="500.0" cy="360.0" r="225.0" fill="none" stroke="#FFFFFF" stroke-opacity="0.28"/>
+<text x="500.0" y="600.0" text-anchor="middle" font-family="Jost, Helvetica, sans-serif" font-size="33" letter-spacing="9" fill="#FFFFFF" fill-opacity="0.78">PHOTO 01</text>
+</svg>
