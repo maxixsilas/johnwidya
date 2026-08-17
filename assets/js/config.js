@@ -74,7 +74,7 @@ window.WEDDING_CONFIG = {
   // Drop your files into assets/img, assets/audio, assets/video and
   // update the filenames below. Placeholder art is used until you do.
   media: {
-    cover:   "assets/img/placeholder-cover.svg",
+    cover:   "assets/img/cover.webp",
     portrait:{ groom: "assets/img/placeholder-groom.svg",
                bride: "assets/img/placeholder-bride.svg" },
     gallery: [
