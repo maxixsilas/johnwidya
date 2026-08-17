@@ -66,7 +66,7 @@ window.WEDDING_CONFIG = {
   // Paste the Google Apps Script Web App URL here after deploying it.
   // See README.md → "Step 2". It looks like:
   // https://script.google.com/macros/s/AKfycb..................../exec
-  apiUrl: "1a0Dzgh0kY-QOZJpu6GNijbpnM9Jih_Jcl1ED_epRjJg",
+  apiUrl: "https://script.google.com/macros/s/AKfycbzxOyjGTzaP81Po6A6jNmZoYRFokLnm0G8QIuC2qjr2T5LeAQA-TPhLqmHqx-l7ValEvw/exec",
   rsvpDeadline: "12 October 2026",
   maxGuestsPerRsvp: 5,
 
