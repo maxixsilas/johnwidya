@@ -3,7 +3,7 @@
 A mobile-first digital wedding invitation with live RSVP, a public wishes wall,
 a countdown, Google Maps directions and one-tap Save The Date.
 
-**26 October 2026 · 5:00 PM WITA · Hilton Bali Resort, Nusa Dua**
+**26 October 2026 · 5:00 PM WITA · Hilton Bali Resort, Uluwatu**
 
 No build step, no framework, no server. Three files do the work:
 `index.html`, `assets/css/style.css`, `assets/js/main.js` — plus
