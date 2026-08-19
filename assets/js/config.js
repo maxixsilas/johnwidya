@@ -46,9 +46,16 @@ window.WEDDING_CONFIG = {
   /* ---- 4. EVENT SCHEDULE (shown in Event Details) ---------------------- */
   // Add or remove rows freely.
   schedule: [
-    { time: "17:00", title: "Holy Matrimony",    note: "Please be seated by 16:45" },
-    { time: "18:30", title: "Reception",         note: "Dinner & celebration" },
-    { time: "21:00", title: "Closing Ceremony",  note: "The celebration ends" }
+    { time: "16:30", title: "Guest Arrival",
+      note: "Come early, find your seat, and enjoy the photo booth while we get ready." },
+    { time: "17:00", title: "The Vow Exchange",
+      note: "The moment we say I do." },
+    { time: "18:00", title: "Buffet Dinner",
+      note: "Dinner is served \u2014 please eat well." },
+    { time: "19:00", title: "Let's Celebrate",
+      note: "Music, dancing and a night of laughter." },
+    { time: "21:00", title: "The Send-Off",
+      note: "A last farewell as the evening closes." }
   ],
   dressCode: "Formal \u00b7 Deep Navy, Dusty Blue & Slate Gray",
 
@@ -86,18 +93,22 @@ window.WEDDING_CONFIG = {
 
     // Each person can have several photos. They slide across automatically.
     // One photo is fine too — just leave a single item in the list.
-    portrait:{
-      groom: ["assets/img/placeholder-groom.svg",
-              "assets/img/placeholder-01.svg",
-              "assets/img/placeholder-03.svg"],
-      bride: ["assets/img/placeholder-bride.svg",
-              "assets/img/placeholder-02.svg",
-              "assets/img/placeholder-04.svg"]
-    },
-    portraitInterval: 3000,   // milliseconds between portrait photos
+    // Page 1 reuses the cover photo so the opening transition is seamless.
+    // Set a different file here only if you want them to differ.
+    hero: "",
 
-    // Photo(s) on the "With Joy" invitation page. A single filename also works.
-    invite: ["assets/img/placeholder-01.svg"],
+    // One full-page photo each. Portrait orientation, shot with space at the
+    // bottom — the name and family sit over the lower third.
+    portrait:{
+      groom: "assets/img/placeholder-groom.svg",
+      bride: "assets/img/placeholder-bride.svg"
+    },
+
+    // The "With Joy" page slides through these automatically.
+    invite: ["assets/img/placeholder-01.svg",
+             "assets/img/placeholder-02.svg",
+             "assets/img/placeholder-03.svg"],
+    portraitInterval: 3000,   // milliseconds between "With Joy" photos
     gallery: [
       "assets/img/placeholder-01.svg",
       "assets/img/placeholder-02.svg",

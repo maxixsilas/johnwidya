@@ -37,13 +37,13 @@
     setAll("groomShort3", g.shortName || ""); setAll("brideShort3", b.shortName || "");
     setAll("footNames", (g.shortName || "") + " & " + (b.shortName || ""));
     setAll("coverDate", D + " . " + String(Mo).padStart(2, "0") + " . " + Y);
-    setAll("coverVenue", v.name || "");
 
     setAll("verse", cp.verse || ""); setAll("verseRef", cp.verseRef || "");
     setAll("invitation", cp.invitation || "");
     setAll("closingText", cp.closing || ""); setAll("thanks", cp.thanks || "Thank You");
 
     setAll("groomName", g.fullName || ""); setAll("brideName", b.fullName || "");
+    setAll("groomFirst", g.shortName || ""); setAll("brideFirst", b.shortName || "");
     setAll("groomOrder", g.childOrder || ""); setAll("brideOrder", b.childOrder || "");
     setAll("groomFather", g.father || ""); setAll("groomMother", g.mother || "");
     setAll("brideFather", b.father || ""); setAll("brideMother", b.mother || "");
@@ -78,12 +78,19 @@
       el.src = src; el.alt = alt || "";
       el.onerror = function () { el.style.display = "none"; };
     };
+    var first = function (x) { return Array.isArray(x) ? x[0] : x; };
+
     set("coverImg", m.cover, "");
     set("closingImg", m.closing, "");
+    // Page 1 reuses the cover photo, so lifting the cover reveals the same
+    // image already in place underneath — the join is invisible.
+    set("heroImg", m.hero || m.cover, "");
 
     var p = m.portrait || {};
-    initSlideshow("groom",  p.groom, (C.groom || {}).fullName);
-    initSlideshow("bride",  p.bride, (C.bride || {}).fullName);
+    set("groomImg", first(p.groom), (C.groom || {}).fullName);
+    set("brideImg", first(p.bride), (C.bride || {}).fullName);
+
+    // The "With Joy" page keeps the sliding gallery.
     initSlideshow("invite", m.invite, "");
 
     var gal = $("gal"), list = m.gallery || [];
@@ -277,27 +284,36 @@
   function buildGift() {
     var g = C.gift || {}, out = "";
     (g.accounts || []).forEach(function (a, i) {
-      out += '<div class="acct" data-acct><button class="acct__btn" type="button">' +
-        esc(a.bank || ("Account " + (i + 1))) + '</button><div class="acct__body"><div class="acct__in">' +
-        '<p class="acct__num">' + esc(a.number) + '</p>' +
+      out += '<div class="acct"><div class="acct__row"><div>' +
+        '<span class="acct__bank">' + esc(a.bank || ("Account " + (i + 1))) + '</span>' +
         '<p class="acct__holder">' + esc(a.holder) + '</p>' +
-        '<button class="copy" type="button" data-copy="' + esc(a.number) + '">Copy number</button>' +
-        '</div></div></div>';
+        '<p class="acct__num">' + esc(a.number) + '</p></div>' +
+        '<button class="copy" type="button" aria-label="Copy account number" data-copy="' +
+        esc(a.number) + '"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5 15V5.5A1.5 1.5 0 0 1 6.5 4H15" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></div></div>';
     });
     if (g.deliveryAddress) {
-      out += '<div class="acct" data-acct><button class="acct__btn" type="button">Send a gift by post</button>' +
-        '<div class="acct__body"><div class="acct__in">' +
-        '<p class="acct__addr">' + esc(g.deliveryAddress) + '</p>' +
-        '<button class="copy" type="button" data-copy="' + esc(g.deliveryAddress) + '">Copy address</button>' +
-        '</div></div></div>';
+      out += '<div class="acct"><div class="acct__row"><div>' +
+        '<span class="acct__bank">Send a gift by post</span>' +
+        '<p class="acct__addr">' + esc(g.deliveryAddress) + '</p></div>' +
+        '<button class="copy" type="button" aria-label="Copy address" data-copy="' +
+        esc(g.deliveryAddress) + '"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5 15V5.5A1.5 1.5 0 0 1 6.5 4H15" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></div></div>';
     }
     $("giftList").innerHTML = out;
 
     $("giftList").addEventListener("click", function (e) {
-      var head = e.target.closest(".acct__btn");
-      if (head) { head.parentNode.classList.toggle("is-open"); return; }
       var cp = e.target.closest("[data-copy]");
       if (cp) copyText(cp.getAttribute("data-copy"));
+    });
+
+    var modal = $("giftModal");
+    var open = function () { modal.hidden = false; document.body.style.overflow = "hidden"; };
+    var shut = function () { modal.hidden = true; document.body.style.overflow = ""; };
+    $("giftBtn").addEventListener("click", open);
+    modal.addEventListener("click", function (e) {
+      if (e.target.closest("[data-gclose]")) shut();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !modal.hidden) shut();
     });
   }
 
@@ -417,6 +433,20 @@
     if (!src) return;
     audio.src = src; audio.volume = 0.55;
     musicBtn.hidden = false;
+
+    // Try to start straight away. Phones block audio until the person has
+    // interacted with the page, so if that fails we start on their very
+    // first touch — which is usually the Open Invitation button anyway.
+    startMusic();
+    var kick = function () {
+      startMusic();
+      if (audio && !audio.paused) {
+        document.removeEventListener("pointerdown", kick);
+        document.removeEventListener("touchstart", kick);
+      }
+    };
+    document.addEventListener("pointerdown", kick);
+    document.addEventListener("touchstart", kick);
     musicBtn.addEventListener("click", function () {
       if (audio.paused) startMusic(); else stopMusic();
     });
