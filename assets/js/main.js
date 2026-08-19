@@ -148,7 +148,7 @@
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (es) {
         es[0].isIntersecting ? play() : stop();
-      }, { root: SNAP ? $("page") : null, threshold: 0.4 }).observe(track);
+      }, { threshold: 0.4 }).observe(track);
     } else play();
 
     document.addEventListener("visibilitychange", function () {
@@ -325,13 +325,14 @@
   var SNAP = (C.scrollMode || "snap") === "snap";
 
   function scroller() {
-    return SNAP ? $("page") : document.scrollingElement || document.documentElement;
+    return document.scrollingElement || document.documentElement;
   }
 
   function initSnap() {
     var page = $("page");
     if (!SNAP) return;
     page.classList.add("snap");
+    document.documentElement.classList.add("snap-mode");
     buildDots();
   }
 
@@ -368,7 +369,7 @@
         var h = $("hint");
         if (h) h.classList.toggle("is-on", i === 0);
       });
-    }, { root: $("page"), threshold: 0.55 });
+    }, { threshold: 0.55 });
 
     secs.forEach(function (el) { spy.observe(el); });
   }
@@ -388,7 +389,7 @@
         if (en.target.id === "calendar") en.target.classList.add("is-drawn");
         io.unobserve(en.target);
       });
-    }, { root: SNAP ? $("page") : null, threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
 
     document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
   }
