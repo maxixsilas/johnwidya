@@ -47,177 +47,216 @@
   </div>
 </section>
 
-<!-- ══ MAIN ═══════════════════════════════════════════════════════════ -->
+<!-- ══ PAGES ══════════════════════════════════════════════════════════ -->
 <main class="page" id="page">
 
-  <!-- Verse -->
-  <section class="sec sec--verse reveal">
-    <p class="verse" data-c="verse"></p>
-    <p class="verse__ref" data-c="verseRef"></p>
-  </section>
-
-  <div class="rule reveal"></div>
-
-  <!-- Bride & Groom -->
-  <section class="sec" id="couple">
-    <p class="eyebrow reveal">Bride &amp; Groom</p>
-    <p class="sec__lead reveal" data-c="invitation"></p>
-
-    <article class="person reveal">
-      <div class="person__photo"><img id="groomImg" alt="" loading="lazy"></div>
-      <h2 class="person__name" data-c="groomName"></h2>
-      <p class="person__role">Groom</p>
-      <p class="person__parents">
-        <span data-c="groomOrder"></span><br>
-        <strong data-c="groomFather"></strong> &amp; <strong data-c="groomMother"></strong>
-      </p>
-      <a class="ig" data-c="groomIg" hidden target="_blank" rel="noopener">Instagram</a>
-    </article>
-
-    <div class="person__amp" aria-hidden="true">&amp;</div>
-
-    <article class="person reveal">
-      <div class="person__photo"><img id="brideImg" alt="" loading="lazy"></div>
-      <h2 class="person__name" data-c="brideName"></h2>
-      <p class="person__role">Bride</p>
-      <p class="person__parents">
-        <span data-c="brideOrder"></span><br>
-        <strong data-c="brideFather"></strong> &amp; <strong data-c="brideMother"></strong>
-      </p>
-      <a class="ig" data-c="brideIg" hidden target="_blank" rel="noopener">Instagram</a>
-    </article>
-  </section>
-
-  <!-- ══ SIGNATURE: calendar + countdown ══ -->
-  <section class="sec sec--calendar" id="date">
-    <p class="eyebrow reveal">Save The Date</p>
-    <h2 class="script reveal" id="calMonth">October 2026</h2>
-
-    <div class="cal reveal" id="calendar">
-      <div class="cal__head" id="calHead"></div>
-      <div class="cal__grid" id="calGrid"></div>
+  <!-- 1 · Verse -->
+  <section class="sec sec--verse" data-page="Welcome">
+    <div class="sec__in">
+      <p class="verse reveal" data-c="verse"></p>
+      <p class="verse__ref reveal" data-c="verseRef"></p>
     </div>
-
-    <p class="cal__caption reveal">
-      <span data-c="dateLabel"></span><br>
-      <span data-c="timeLabel"></span>
-    </p>
-
-    <div class="countdown reveal" id="countdown" aria-live="polite">
-      <div class="cd"><span class="cd__num" id="cdD">000</span><span class="cd__lab">Days</span></div>
-      <div class="cd"><span class="cd__num" id="cdH">00</span><span class="cd__lab">Hours</span></div>
-      <div class="cd"><span class="cd__num" id="cdM">00</span><span class="cd__lab">Minutes</span></div>
-      <div class="cd"><span class="cd__num" id="cdS">00</span><span class="cd__lab">Seconds</span></div>
-    </div>
-
-    <button class="btn btn--ghost reveal" id="calBtn" type="button">Add to Google Calendar</button>
   </section>
 
-  <!-- Gallery -->
-  <section class="sec sec--gallery" id="gallery">
-    <p class="eyebrow reveal">Our Moments</p>
-    <div class="gal" id="gal"></div>
-  </section>
-
-  <!-- Video (hidden unless configured) -->
-  <section class="sec reveal" id="videoSec" hidden>
-    <p class="eyebrow">Our Story</p>
-    <div class="video"><video id="preVideo" controls playsinline preload="none"></video></div>
-  </section>
-
-  <!-- Event details -->
-  <section class="sec" id="event">
-    <p class="eyebrow reveal">Event Details</p>
-    <h2 class="script reveal">The Celebration</h2>
-
-    <ul class="sched reveal" id="sched"></ul>
-
-    <p class="dress reveal">
-      <span class="dress__lab">Dress code</span>
-      <span class="dress__val" data-c="dressCode"></span>
-    </p>
-  </section>
-
-  <!-- Venue / Maps -->
-  <section class="sec sec--venue" id="venue">
-    <p class="eyebrow reveal">Location</p>
-    <h2 class="script reveal" data-c="venueName"></h2>
-    <p class="venue__hall reveal" data-c="venueHall"></p>
-
-    <div class="map reveal"><iframe id="mapFrame" title="Map to the wedding venue" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
-
-    <a class="venue__addr reveal" id="mapLink" target="_blank" rel="noopener">
-      <span data-c="venueAddr"></span>
-      <span class="venue__area" data-c="venueArea"></span>
-      <span class="venue__cta">Open in Google Maps</span>
-    </a>
-  </section>
-
-  <div class="rule reveal"></div>
-
-  <!-- RSVP -->
-  <section class="sec sec--rsvp" id="rsvp">
-    <p class="eyebrow reveal">RSVP</p>
-    <h2 class="script reveal">Will You Join Us?</h2>
-    <p class="sec__lead reveal">Kindly let us know before <strong data-c="deadline"></strong> so we can prepare a seat for you.</p>
-
-    <form class="form reveal" id="rsvpForm" novalidate>
-      <label class="field">
-        <span class="field__lab">Full name</span>
-        <input type="text" id="fName" name="name" required maxlength="80" autocomplete="name" placeholder="Your name">
-      </label>
-
-      <fieldset class="field field--choice">
-        <legend class="field__lab">Will you attend?</legend>
-        <div class="choice">
-          <input type="radio" id="attYes" name="attendance" value="Attending" required>
-          <label for="attYes">Yes, I'll be there</label>
-          <input type="radio" id="attNo" name="attendance" value="Not Attending">
-          <label for="attNo">Sorry, I can't</label>
+  <!-- 2 · Groom -->
+  <section class="sec" id="groom" data-page="Groom">
+    <div class="sec__in">
+      <p class="eyebrow reveal">The Groom</p>
+      <article class="person reveal">
+        <div class="person__photo">
+          <div class="slides" id="groomSlides"></div>
         </div>
-      </fieldset>
-
-      <label class="field" id="guestsField">
-        <span class="field__lab">Number of guests</span>
-        <select id="fGuests" name="guests"></select>
-      </label>
-
-      <label class="field">
-        <span class="field__lab">Wishes for the couple</span>
-        <textarea id="fMessage" name="message" rows="4" maxlength="500" placeholder="Write something kind…"></textarea>
-        <span class="field__count"><span id="charCount">0</span>/500</span>
-      </label>
-
-      <!-- honeypot: hidden from people, catches bots -->
-      <input type="text" id="fWebsite" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
-
-      <button class="btn btn--solid" type="submit" id="submitBtn">Send RSVP</button>
-      <p class="form__msg" id="formMsg" role="status"></p>
-    </form>
-  </section>
-
-  <!-- Wishes -->
-  <section class="sec sec--wishes" id="wishes">
-    <p class="eyebrow reveal">Wedding Wishes</p>
-    <p class="wishes__count reveal"><span id="wishCount">—</span> messages so far</p>
-
-    <div class="wishes" id="wishList">
-      <p class="wishes__empty" id="wishEmpty">Loading wishes…</p>
+        <div class="pdots" id="groomDots" hidden></div>
+        <h2 class="person__name" data-c="groomName"></h2>
+        <p class="person__parents">
+          <span data-c="groomOrder"></span><br>
+          <strong data-c="groomFather"></strong> &amp; <strong data-c="groomMother"></strong>
+        </p>
+        <a class="ig" data-c="groomIg" hidden target="_blank" rel="noopener">Instagram</a>
+      </article>
     </div>
-    <button class="btn btn--ghost" id="moreBtn" type="button" hidden>Show more</button>
   </section>
 
-  <div class="rule reveal"></div>
-
-  <!-- Gift -->
-  <section class="sec sec--gift" id="gift">
-    <p class="eyebrow reveal">Wanna give us some gifts?</p>
-    <p class="sec__lead reveal" data-c="giftIntro"></p>
-    <div class="gift" id="giftList"></div>
+  <!-- 3 · Bride -->
+  <section class="sec" id="bride" data-page="Bride">
+    <div class="sec__in">
+      <p class="eyebrow reveal">The Bride</p>
+      <article class="person reveal">
+        <div class="person__photo">
+          <div class="slides" id="brideSlides"></div>
+        </div>
+        <div class="pdots" id="brideDots" hidden></div>
+        <h2 class="person__name" data-c="brideName"></h2>
+        <p class="person__parents">
+          <span data-c="brideOrder"></span><br>
+          <strong data-c="brideFather"></strong> &amp; <strong data-c="brideMother"></strong>
+        </p>
+        <a class="ig" data-c="brideIg" hidden target="_blank" rel="noopener">Instagram</a>
+      </article>
+    </div>
   </section>
 
-  <!-- Closing -->
-  <section class="closing" id="closing">
+  <!-- 4 · Invitation words -->
+  <section class="sec sec--invite" data-page="Invitation">
+    <div class="sec__in">
+      <p class="eyebrow reveal">With Joy</p>
+      <p class="sec__lead reveal" data-c="invitation"></p>
+      <p class="invite__names reveal">
+        <span data-c="groomShort3"></span> &amp; <span data-c="brideShort3"></span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 5 · Save the date -->
+  <section class="sec sec--calendar" id="date" data-page="Save the date">
+    <div class="sec__in">
+      <p class="eyebrow reveal">Save The Date</p>
+      <h2 class="script reveal" id="calMonth">October 2026</h2>
+
+      <div class="cal reveal" id="calendar">
+        <div class="cal__head" id="calHead"></div>
+        <div class="cal__grid" id="calGrid"></div>
+      </div>
+
+      <p class="cal__caption reveal">
+        <span data-c="dateLabel"></span><br>
+        <span data-c="timeLabel"></span>
+      </p>
+
+      <div class="countdown reveal" id="countdown" aria-live="polite">
+        <div class="cd"><span class="cd__num" id="cdD">000</span><span class="cd__lab">Days</span></div>
+        <div class="cd"><span class="cd__num" id="cdH">00</span><span class="cd__lab">Hours</span></div>
+        <div class="cd"><span class="cd__num" id="cdM">00</span><span class="cd__lab">Minutes</span></div>
+        <div class="cd"><span class="cd__num" id="cdS">00</span><span class="cd__lab">Seconds</span></div>
+      </div>
+
+      <button class="btn btn--ghost reveal" id="calBtn" type="button">Add to Google Calendar</button>
+    </div>
+  </section>
+
+  <!-- 6 · Gallery -->
+  <section class="sec sec--gallery" id="gallery" data-page="Moments">
+    <div class="sec__in">
+      <p class="eyebrow reveal">Our Moments</p>
+      <div class="gal reveal" id="gal"></div>
+    </div>
+  </section>
+
+  <!-- 7 · Video (hidden unless configured) -->
+  <section class="sec" id="videoSec" data-page="Our story" hidden>
+    <div class="sec__in">
+      <p class="eyebrow reveal">Our Story</p>
+      <div class="video reveal"><video id="preVideo" controls playsinline preload="none"></video></div>
+    </div>
+  </section>
+
+  <!-- 8 · Event details -->
+  <section class="sec" id="event" data-page="Details">
+    <div class="sec__in">
+      <p class="eyebrow reveal">Event Details</p>
+      <h2 class="script reveal">The Celebration</h2>
+      <ul class="sched reveal" id="sched"></ul>
+      <p class="dress reveal">
+        <span class="dress__lab">Dress code</span>
+        <span class="dress__val" data-c="dressCode"></span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 9 · Venue -->
+  <section class="sec sec--venue" id="venue" data-page="Location">
+    <div class="sec__in">
+      <p class="eyebrow reveal">Location</p>
+      <h2 class="script reveal" data-c="venueName"></h2>
+      <p class="venue__hall reveal" data-c="venueHall"></p>
+
+      <div class="map reveal"><iframe id="mapFrame" title="Map to the wedding venue" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+
+      <a class="venue__addr reveal" id="mapLink" target="_blank" rel="noopener">
+        <span data-c="venueAddr"></span>
+        <span class="venue__area" data-c="venueArea"></span>
+        <span class="venue__cta">Open in Google Maps</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 10 · RSVP -->
+  <section class="sec sec--rsvp" id="rsvp" data-page="RSVP">
+    <div class="sec__in">
+      <p class="eyebrow reveal">RSVP</p>
+      <h2 class="script reveal">Will You Join Us?</h2>
+      <p class="sec__lead reveal">Kindly reply before <strong data-c="deadline"></strong>.</p>
+
+      <form class="form reveal" id="rsvpForm" novalidate>
+        <label class="field">
+          <span class="field__lab">Full name</span>
+          <input type="text" id="fName" name="name" required maxlength="80" autocomplete="name" placeholder="Your name">
+        </label>
+
+        <fieldset class="field field--choice">
+          <legend class="field__lab">Will you attend?</legend>
+          <div class="choice">
+            <input type="radio" id="attYes" name="attendance" value="Attending" required>
+            <label for="attYes">Yes, I'll be there</label>
+            <input type="radio" id="attNo" name="attendance" value="Not Attending">
+            <label for="attNo">Sorry, I can't</label>
+          </div>
+        </fieldset>
+
+        <label class="field" id="guestsField">
+          <span class="field__lab">Number of guests</span>
+          <select id="fGuests" name="guests"></select>
+        </label>
+
+        <label class="field">
+          <span class="field__lab">Wishes for the couple</span>
+          <textarea id="fMessage" name="message" rows="3" maxlength="500" placeholder="Write something kind…"></textarea>
+          <span class="field__count"><span id="charCount">0</span>/500</span>
+        </label>
+
+        <input type="text" id="fWebsite" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+
+        <button class="btn btn--solid" type="submit" id="submitBtn">Send RSVP</button>
+        <p class="form__msg" id="formMsg" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- 11 · Wishes -->
+  <section class="sec sec--wishes" id="wishes" data-page="Wishes">
+    <div class="sec__in">
+      <p class="eyebrow reveal">Wedding Wishes</p>
+      <p class="wishes__count reveal"><span id="wishCount">—</span> messages so far</p>
+
+      <div class="wishes" id="wishList">
+        <p class="wishes__empty" id="wishEmpty">Loading wishes…</p>
+      </div>
+
+      <div class="wishnav" id="wishNav" hidden>
+        <button class="wishnav__arrow" id="wishPrev" type="button" aria-label="Previous wish">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <span class="wishnav__count"><span id="wishIdx">1</span> / <span id="wishTotal">1</span></span>
+        <button class="wishnav__arrow" id="wishNext" type="button" aria-label="Next wish">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <button class="btn btn--ghost" id="moreBtn" type="button" hidden>Show more</button>
+    </div>
+  </section>
+
+  <!-- 12 · Gift -->
+  <section class="sec sec--gift" id="gift" data-page="Gifts">
+    <div class="sec__in">
+      <p class="eyebrow reveal">Wanna give us some gifts?</p>
+      <p class="sec__lead reveal" data-c="giftIntro"></p>
+      <div class="gift reveal" id="giftList"></div>
+    </div>
+  </section>
+
+  <!-- 13 · Closing -->
+  <section class="closing" id="closing" data-page="Thank you">
     <div class="closing__media"><img id="closingImg" alt="" loading="lazy"></div>
     <div class="closing__scrim"></div>
     <div class="closing__inner">
@@ -226,13 +265,18 @@
       <p class="closing__names reveal">
         <span data-c="groomShort2"></span> &amp; <span data-c="brideShort2"></span>
       </p>
+      <p class="foot"><span data-c="footNames"></span> · 2026</p>
     </div>
   </section>
-
-  <footer class="foot">
-    <p>Made with love · <span data-c="footNames"></span> · 2026</p>
-  </footer>
 </main>
+
+<!-- Page dots -->
+<nav class="dots" id="dots" aria-label="Invitation sections"></nav>
+
+<!-- Scroll hint -->
+<div class="hint" id="hint" aria-hidden="true">
+  <span class="hint__line"></span>
+</div>
 
 <!-- Floating music button -->
 <button class="music" id="musicBtn" type="button" aria-label="Play background music" hidden>
