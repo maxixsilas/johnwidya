@@ -82,21 +82,15 @@
     set("closingImg", m.closing, "");
 
     var p = m.portrait || {};
-    initSlideshow("groom", p.groom, (C.groom || {}).fullName);
-    initSlideshow("bride", p.bride, (C.bride || {}).fullName);
+    initSlideshow("groom",  p.groom, (C.groom || {}).fullName);
+    initSlideshow("bride",  p.bride, (C.bride || {}).fullName);
+    initSlideshow("invite", m.invite, "");
 
     var gal = $("gal"), list = m.gallery || [];
     if (gal) {
       gal.innerHTML = list.map(function (src) {
         return '<figure><img src="' + esc(src) + '" alt="" loading="lazy"></figure>';
       }).join("");
-    }
-
-    if (m.video) {
-      var vs = $("videoSec"), vid = $("preVideo");
-      vs.hidden = false;
-      vid.src = m.video;
-      if (m.videoPoster) vid.poster = m.videoPoster;
     }
   }
 
@@ -265,6 +259,18 @@
         '<span class="sched__title">' + esc(r.title) + '</span>' +
         (r.note ? '<span class="sched__note">' + esc(r.note) + '</span>' : '') +
         '</span></li>';
+    }).join("");
+  }
+
+  function buildPalette() {
+    var box = $("palette"), list = (C.dressPalette || []);
+    if (!box) return;
+    if (!list.length) { box.hidden = true; return; }
+    box.innerHTML = list.map(function (c) {
+      return '<div class="swatch">' +
+        '<div class="swatch__chip" style="background:' + esc(c.hex) + '"></div>' +
+        '<span class="swatch__name">' + esc(c.name) + '</span>' +
+        '<span class="swatch__hex">' + esc(c.hex) + '</span></div>';
     }).join("");
   }
 
@@ -677,6 +683,7 @@
     initCover();
     buildCalendar();
     buildSchedule();
+    buildPalette();
     buildGift();
     initLinks();
     initForm();

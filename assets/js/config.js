@@ -28,9 +28,9 @@ window.WEDDING_CONFIG = {
   // Bali runs on WITA = UTC+08:00. Keep the +08:00 offset.
   // Format: YYYY-MM-DDTHH:MM:SS+08:00
   ceremonyStart: "2026-10-26T17:00:00+08:00",
-  ceremonyEnd:   "2026-10-26T22:00:00+08:00",
+  ceremonyEnd:   "2026-10-26T21:00:00+08:00",
   dateLabel:     "Monday, 26 October 2026",
-  timeLabel:     "5:00 PM — until finished (WITA)",
+  timeLabel:     "5:00 PM \u2013 9:00 PM (WITA)",
 
   /* ---- 3. VENUE -------------------------------------------------------- */
   venue: {
@@ -46,11 +46,19 @@ window.WEDDING_CONFIG = {
   /* ---- 4. EVENT SCHEDULE (shown in Event Details) ---------------------- */
   // Add or remove rows freely.
   schedule: [
-    { time: "17:00", title: "Holy Matrimony",  note: "Please be seated by 16:45" },
-    { time: "18:30", title: "Reception",       note: "Dinner & celebration" },
-    { time: "20:00", title: "Dancing",         note: "" }
+    { time: "17:00", title: "Holy Matrimony",    note: "Please be seated by 16:45" },
+    { time: "18:30", title: "Reception",         note: "Dinner & celebration" },
+    { time: "21:00", title: "Closing Ceremony",  note: "The celebration ends" }
   ],
-  dressCode: "Formal · Earth tones & pastels",
+  dressCode: "Formal \u00b7 Deep Navy, Dusty Blue & Slate Gray",
+
+  // Swatches shown under the dress code so guests can match the palette.
+  // Add or remove colours freely; leave the list empty to hide the swatches.
+  dressPalette: [
+    { name: "Deep Navy",  hex: "#1B2A4A" },
+    { name: "Dusty Blue", hex: "#9BB0C1" },
+    { name: "Slate Gray", hex: "#708090" }
+  ],
 
   /* ---- 5. GIFTS -------------------------------------------------------- */
   gift: {
@@ -71,7 +79,7 @@ window.WEDDING_CONFIG = {
   maxGuestsPerRsvp: 5,
 
   /* ---- 7. MEDIA -------------------------------------------------------- */
-  // Drop your files into assets/img, assets/audio, assets/video and
+  // Drop your files into assets/img and assets/audio, then
   // update the filenames below. Placeholder art is used until you do.
   media: {
     cover:   "assets/img/cover.webp",
@@ -87,6 +95,9 @@ window.WEDDING_CONFIG = {
               "assets/img/placeholder-04.svg"]
     },
     portraitInterval: 3000,   // milliseconds between portrait photos
+
+    // Photo(s) on the "With Joy" invitation page. A single filename also works.
+    invite: ["assets/img/placeholder-01.svg"],
     gallery: [
       "assets/img/placeholder-01.svg",
       "assets/img/placeholder-02.svg",
@@ -94,9 +105,6 @@ window.WEDDING_CONFIG = {
       "assets/img/placeholder-04.svg"
     ],
     closing: "assets/img/placeholder-closing.svg",
-    // Optional pre-wedding video. Leave "" to hide the video section.
-    video:   "",
-    videoPoster: "assets/img/placeholder-01.svg",
     // Background music. Leave "" to hide the music button.
     music:   "assets/audio/music.mp3"
   },
