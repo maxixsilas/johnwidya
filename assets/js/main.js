@@ -34,6 +34,7 @@
     setAll("eyebrow", cp.eyebrow || "The Wedding Of");
     setAll("groomShort", g.shortName || ""); setAll("brideShort", b.shortName || "");
     setAll("groomShort2", g.shortName || ""); setAll("brideShort2", b.shortName || "");
+    setAll("groomShort3", g.shortName || ""); setAll("brideShort3", b.shortName || "");
     setAll("footNames", (g.shortName || "") + " & " + (b.shortName || ""));
     setAll("coverDate", D + " . " + String(Mo).padStart(2, "0") + " . " + Y);
     setAll("coverVenue", v.name || "");
@@ -78,9 +79,11 @@
       el.onerror = function () { el.style.display = "none"; };
     };
     set("coverImg", m.cover, "");
-    set("groomImg", (m.portrait || {}).groom, (C.groom || {}).fullName);
-    set("brideImg", (m.portrait || {}).bride, (C.bride || {}).fullName);
     set("closingImg", m.closing, "");
+
+    var p = m.portrait || {};
+    initSlideshow("groom", p.groom, (C.groom || {}).fullName);
+    initSlideshow("bride", p.bride, (C.bride || {}).fullName);
 
     var gal = $("gal"), list = m.gallery || [];
     if (gal) {
@@ -97,6 +100,62 @@
     }
   }
 
+
+  /* ══ Portrait slideshow ═════════════════════════════════════════════
+     config.js → media.portrait.groom accepts either one filename or a
+     list of them. With more than one, they slide across automatically.
+     ================================================================== */
+  var SLIDE_MS = (C.media && C.media.portraitInterval) || 3000;
+
+  function initSlideshow(who, src, alt) {
+    var track = $(who + "Slides"), dots = $(who + "Dots");
+    if (!track) return;
+
+    // Accept a plain string for backwards compatibility.
+    var list = Array.isArray(src) ? src.slice() : (src ? [src] : []);
+    list = list.filter(Boolean);
+    if (!list.length) { track.parentNode.style.background = "var(--paper-2)"; return; }
+
+    track.innerHTML = list.map(function (s, i) {
+      return '<img src="' + esc(s) + '" alt="' + esc(i === 0 ? (alt || "") : "") +
+             '" loading="' + (i === 0 ? "eager" : "lazy") + '">';
+    }).join("");
+
+    // A single photo needs no dots, no timer, no transition.
+    if (list.length < 2) return;
+
+    dots.hidden = false;
+    dots.innerHTML = list.map(function (_, i) {
+      return '<span' + (i === 0 ? ' class="is-active"' : '') + '></span>';
+    }).join("");
+
+    var i = 0, timer = null;
+    var marks = [].slice.call(dots.children);
+
+    function go(n) {
+      i = (n + list.length) % list.length;
+      track.style.transform = "translateX(-" + (i * 100) + "%)";
+      marks.forEach(function (d, k) { d.classList.toggle("is-active", k === i); });
+    }
+    function play() { if (!timer) timer = setInterval(function () { go(i + 1); }, SLIDE_MS); }
+    function stop() { clearInterval(timer); timer = null; }
+
+    // Tapping the photo advances it and restarts the timer.
+    track.parentNode.addEventListener("click", function () { go(i + 1); stop(); play(); });
+
+    // Only run while the page is actually on screen — saves battery and
+    // means guests never land mid-transition.
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        es[0].isIntersecting ? play() : stop();
+      }, { root: SNAP ? $("page") : null, threshold: 0.4 }).observe(track);
+    } else play();
+
+    document.addEventListener("visibilitychange", function () {
+      document.hidden ? stop() : play();
+    });
+  }
+
   /* ══ 3. Cover / guest name / open ═══════════════════════════════════ */
   function initCover() {
     var q = new URLSearchParams(location.search);
@@ -109,7 +168,12 @@
     $("openBtn").addEventListener("click", function () {
       $("cover").classList.add("is-gone");
       document.body.classList.remove("is-locked");
+      scroller().scrollTop = 0;
       window.scrollTo(0, 0);
+      setTimeout(function () {
+        var d = $("dots"); if (d) d.classList.add("is-on");
+        var h = $("hint"); if (h) h.classList.add("is-on");
+      }, 900);
       startMusic();
       setTimeout(function () { revealScan(); }, 60);
       setTimeout(function () { $("cover").style.display = "none"; }, 1000);
@@ -253,6 +317,62 @@
     toastTimer = setTimeout(function () { t.classList.remove("is-on"); }, 2200);
   }
 
+
+  /* ══ Snap scrolling ═════════════════════════════════════════════════
+     config.js → scrollMode: "snap" gives one full screen per section.
+     scrollMode: "free" gives ordinary continuous scrolling.
+     ================================================================== */
+  var SNAP = (C.scrollMode || "snap") === "snap";
+
+  function scroller() {
+    return SNAP ? $("page") : document.scrollingElement || document.documentElement;
+  }
+
+  function initSnap() {
+    var page = $("page");
+    if (!SNAP) return;
+    page.classList.add("snap");
+    buildDots();
+  }
+
+  function buildDots() {
+    var page = $("page"), nav = $("dots");
+    if (!nav) return;
+    var secs = [].slice.call(page.children).filter(function (el) {
+      return !el.hidden;
+    });
+
+    nav.innerHTML = secs.map(function (el, i) {
+      var label = el.getAttribute("data-page") || ("Section " + (i + 1));
+      return '<button type="button" data-i="' + i + '" aria-label="Go to ' + esc(label) + '"></button>';
+    }).join("");
+
+    var dots = [].slice.call(nav.children);
+
+    nav.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      secs[+b.getAttribute("data-i")].scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    if (!("IntersectionObserver" in window)) return;
+
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var i = secs.indexOf(en.target);
+        dots.forEach(function (d, n) { d.classList.toggle("is-active", n === i); });
+        // dots turn white over the dark closing page
+        var dark = en.target.classList.contains("closing");
+        dots.forEach(function (d) { d.classList.toggle("on-dark", dark); });
+        // the hint only belongs on the first page
+        var h = $("hint");
+        if (h) h.classList.toggle("is-on", i === 0);
+      });
+    }, { root: $("page"), threshold: 0.55 });
+
+    secs.forEach(function (el) { spy.observe(el); });
+  }
+
   /* ══ 8. Reveal on scroll ════════════════════════════════════════════ */
   var io;
   function initReveal() {
@@ -268,7 +388,7 @@
         if (en.target.id === "calendar") en.target.classList.add("is-drawn");
         io.unobserve(en.target);
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    }, { root: SNAP ? $("page") : null, threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
 
     document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
   }
@@ -439,36 +559,100 @@
       })
       .catch(function () {
         if (!cache.length) {
-          $("wishEmpty").textContent = "Wishes couldn't load right now.";
+          var empty = $("wishEmpty");
+          if (empty) empty.textContent = "Wishes couldn't load right now.";
           $("wishCount").textContent = "—";
         }
       });
   }
 
+  var CAROUSEL = (C.wishesStyle || "carousel") === "carousel";
+
   function renderWishes(items) {
-    var list = $("wishList"), count = $("wishCount");
+    var list = $("wishList"), count = $("wishCount"), nav = $("wishNav");
     var withMsg = (items || []).filter(function (w) { return w && w.message; });
     count.textContent = withMsg.length;
 
     if (!withMsg.length) {
+      list.className = "wishes";
       list.innerHTML = '<p class="wishes__empty">No wishes yet. Be the first to write one.</p>';
       $("moreBtn").hidden = true;
+      if (nav) nav.hidden = true;
       return;
     }
 
-    var slice = withMsg.slice(0, shown);
+    var slice = CAROUSEL ? withMsg : withMsg.slice(0, shown);
+
+    list.className = CAROUSEL ? "wishes wishes--carousel" : "wishes";
     list.innerHTML = slice.map(function (w, i) {
       var tagCls = w.attendance === "Attending" ? "wish__tag" : "wish__tag wish__tag--no";
       var tag = w.attendance ? '<span class="' + tagCls + '">' + esc(w.attendance) + "</span>" : "";
+      var inner =
+        '<p class="wish__msg">' + esc(w.message) + "</p>" +
+        '<div class="wish__head"><h3 class="wish__name">' + esc(w.name || "Guest") + "</h3>" + tag + "</div>" +
+        '<span class="wish__time">' + esc(relTime(w.timestamp)) + "</span>";
+
+      if (CAROUSEL) {
+        return '<article class="wish"><div class="wish__card">' + inner + "</div></article>";
+      }
       return '<article class="wish" style="animation-delay:' + Math.min(i, 8) * 40 + 'ms">' +
         '<div class="wish__head"><h3 class="wish__name">' + esc(w.name || "Guest") + "</h3>" + tag + "</div>" +
         '<p class="wish__msg">' + esc(w.message) + "</p>" +
         '<span class="wish__time">' + esc(relTime(w.timestamp)) + "</span></article>";
     }).join("");
 
+    if (CAROUSEL) {
+      $("moreBtn").hidden = true;
+      initCarousel(withMsg.length);
+      return;
+    }
+
     var more = $("moreBtn");
     more.hidden = withMsg.length <= shown;
     more.onclick = function () { shown += PAGE; renderWishes(withMsg); };
+  }
+
+  /* ══ Wishes carousel ════════════════════════════════════════════════
+     Native horizontal scroll-snap. Each swipe lands on exactly one card.
+     overscroll-behavior-x:contain stops a swipe past the last wish from
+     dragging the whole invitation sideways.
+     ================================================================== */
+  var carouselBound = false;
+
+  function initCarousel(total) {
+    var track = $("wishList"), nav = $("wishNav");
+    if (!nav) return;
+
+    nav.hidden = total < 2;
+    $("wishTotal").textContent = total;
+
+    function indexNow() {
+      var slide = track.firstElementChild;
+      if (!slide) return 0;
+      return Math.round(track.scrollLeft / slide.getBoundingClientRect().width);
+    }
+    function sync() {
+      var i = Math.min(Math.max(indexNow(), 0), total - 1);
+      $("wishIdx").textContent = i + 1;
+      $("wishPrev").disabled = i <= 0;
+      $("wishNext").disabled = i >= total - 1;
+    }
+    function goTo(i) {
+      var slide = track.firstElementChild;
+      if (!slide) return;
+      track.scrollTo({ left: i * slide.getBoundingClientRect().width, behavior: "smooth" });
+    }
+
+    if (!carouselBound) {
+      carouselBound = true;
+      var t;
+      track.addEventListener("scroll", function () {
+        clearTimeout(t); t = setTimeout(sync, 90);
+      }, { passive: true });
+      $("wishPrev").addEventListener("click", function () { goTo(indexNow() - 1); });
+      $("wishNext").addEventListener("click", function () { goTo(indexNow() + 1); });
+    }
+    sync();
   }
 
   function relTime(iso) {
@@ -488,6 +672,7 @@
     document.body.classList.add("is-locked");
     fillContent();
     fillMedia();
+    initSnap();
     initCover();
     buildCalendar();
     buildSchedule();

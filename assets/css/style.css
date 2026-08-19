@@ -57,7 +57,7 @@ a{ color:inherit; text-decoration:none; }
   background:var(--paper);
   position:relative;
   box-shadow:0 0 60px rgba(43,46,44,.08);
-  overflow:hidden;
+  overflow-x:clip;
 }
 
 /* ══ COVER ═════════════════════════════════════════════════════════════ */
@@ -189,10 +189,6 @@ a{ color:inherit; text-decoration:none; }
 .sec--wishes{ padding-top:48px; }
 .sec--gift{ background:var(--paper-2); }
 
-.rule{
-  width:1px; height:56px; margin:0 auto;
-  background:linear-gradient(180deg,transparent,var(--line),transparent);
-}
 
 .script{
   font-family:var(--display); font-weight:400;
@@ -544,11 +540,8 @@ a{ color:inherit; text-decoration:none; }
 }
 
 .foot{
-  padding:26px 20px calc(26px + env(safe-area-inset-bottom));
-  text-align:center; background:var(--ink); color:rgba(247,246,243,.5);
-}
-.foot p{
-  margin:0; font-family:var(--util); font-size:9.5px; font-weight:300;
+  margin:38px 0 0; color:rgba(255,255,255,.45);
+  font-family:var(--util); font-size:9px; font-weight:300;
   letter-spacing:.2em; text-transform:uppercase;
 }
 
@@ -613,4 +606,245 @@ a{ color:inherit; text-decoration:none; }
   }
   .reveal{ opacity:1; transform:none; }
   .cal__ring path{ stroke-dashoffset:0; }
+}
+
+
+/* ==========================================================================
+   SNAP MODE — one full screen per section, like flipping a page
+   Everything here is switched on by <main class="page snap">, which
+   main.js adds when config.js has scrollMode: "snap".
+   Set scrollMode: "free" and none of this applies.
+   ========================================================================== */
+
+.page.snap{
+  height:100vh; height:100dvh;
+  overflow-y:auto;
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
+  overscroll-behavior-y:none;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* Each section is exactly one screen and becomes a snap stop.
+   scroll-snap-stop:always is what stops a fast flick skipping pages. */
+.page.snap > .sec,
+.page.snap > .closing{
+  min-height:100vh; min-height:100dvh;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  padding:0;
+  display:grid;
+  align-content:safe center;
+}
+
+/* Inner wrapper holds the padding, so the snap box stays exactly one screen */
+.page.snap .sec__in{
+  width:100%;
+  padding:calc(58px + env(safe-area-inset-top)) var(--pad)
+          calc(46px + env(safe-area-inset-bottom));
+  max-height:100dvh;
+  overflow-y:auto;
+  overscroll-behavior-y:contain;
+}
+.page.snap .sec--gallery .sec__in{ padding-inline:6px; }
+
+/* Tighter vertical rhythm so each page fits without inner scrolling */
+.page.snap .script{ margin-bottom:18px; }
+.page.snap .eyebrow{ margin-bottom:14px; }
+.page.snap .sec__lead{ margin-bottom:24px; }
+.page.snap .cal__caption{ margin-top:18px; }
+.page.snap .countdown{ margin-top:20px; }
+.page.snap .btn--ghost{ margin-top:22px; }
+.page.snap .person__photo{ margin-bottom:20px; }
+.page.snap .field{ margin-bottom:18px; }
+.page.snap .dress{ margin-top:26px; }
+.page.snap .map{ height:200px; }
+
+/* Gallery fills its page as an even grid instead of a tall column */
+.page.snap .gal{
+  height:min(72dvh, 620px);
+  grid-auto-rows:1fr;
+}
+.page.snap .gal figure:first-child,
+.page.snap .gal figure:last-child:nth-child(even){ grid-column:auto; }
+.page.snap .gal img{ aspect-ratio:auto; height:100%; }
+
+/* The wishes list scrolls inside its own page rather than pushing it taller.
+   overscroll-behavior:contain stops that inner scroll from flipping the page. */
+.page.snap .wishes{
+  max-height:min(46dvh, 380px);
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  padding-right:4px;
+}
+.page.snap .wishes::-webkit-scrollbar{ width:2px; }
+.page.snap .wishes::-webkit-scrollbar-thumb{ background:var(--line); }
+
+/* Invitation page */
+.invite__names{
+  font-family:var(--display); font-size:clamp(28px,8vw,36px);
+  margin:0; letter-spacing:.03em;
+}
+
+/* ── Page dots ─────────────────────────────────────────────────────── */
+.dots{
+  position:fixed; z-index:65;
+  top:50%; right:12px; transform:translateY(-50%);
+  display:none; flex-direction:column; gap:9px;
+  opacity:0; transition:opacity .5s var(--ease);
+}
+.page.snap ~ .dots{ display:flex; }
+.dots.is-on{ opacity:1; }
+@media (min-width:520px){ .dots{ right:calc(50% - var(--col)/2 + 12px); } }
+
+.dots button{
+  width:20px; height:20px; padding:0; border:0; background:none;
+  display:grid; place-items:center;
+}
+.dots button::after{
+  content:""; width:5px; height:5px; border-radius:50%;
+  background:var(--ink-3); opacity:.4;
+  transition:opacity .3s var(--ease), transform .3s var(--ease), background .3s;
+}
+.dots button.is-active::after{
+  opacity:1; transform:scale(1.5); background:var(--celadon-2);
+}
+.dots button.on-dark::after{ background:#fff; }
+
+/* ── Scroll hint ───────────────────────────────────────────────────── */
+.hint{
+  position:fixed; z-index:64;
+  left:50%; transform:translateX(-50%);
+  bottom:calc(22px + env(safe-area-inset-bottom));
+  width:1px; height:34px; overflow:hidden;
+  opacity:0; transition:opacity .6s var(--ease);
+  pointer-events:none;
+}
+.hint.is-on{ opacity:.55; }
+.hint__line{
+  display:block; width:1px; height:100%;
+  background:linear-gradient(180deg,transparent,var(--ink-2));
+  animation:hintDrop 2.1s var(--ease) infinite;
+}
+@keyframes hintDrop{
+  0%{ transform:translateY(-100%); }
+  60%,100%{ transform:translateY(100%); }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .page.snap{ scroll-behavior:auto; }
+  .hint__line{ animation:none; }
+}
+
+/* ==========================================================================
+   PORTRAIT SLIDESHOW — several photos per person, sliding automatically
+   ========================================================================== */
+
+.slides{
+  display:flex; height:100%; width:100%;
+  transition:transform .9s var(--ease);
+  will-change:transform;
+}
+.slides img{
+  flex:0 0 100%; width:100%; height:100%;
+  object-fit:cover; display:block;
+}
+
+/* Small dots under each portrait showing which photo is up */
+.pdots{
+  display:flex; justify-content:center; gap:6px;
+  margin:-14px 0 18px;
+}
+.pdots span{
+  width:4px; height:4px; border-radius:50%;
+  background:var(--ink-3); opacity:.35;
+  transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.pdots span.is-active{ opacity:1; transform:scale(1.4); background:var(--celadon-2); }
+
+@media (prefers-reduced-motion:reduce){
+  .slides{ transition:none; }
+}
+
+/* ==========================================================================
+   WISHES CAROUSEL — one message per swipe
+   ========================================================================== */
+
+.page.snap .wishes--carousel{
+  max-height:none; overflow-y:hidden; padding-right:0;
+}
+.wishes--carousel{
+  display:flex;
+  max-height:none;
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  overscroll-behavior-x:contain;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  padding:0; margin:0 calc(var(--pad) * -1);
+}
+.wishes--carousel::-webkit-scrollbar{ display:none; }
+
+/* Each wish becomes a full-width card */
+.wishes--carousel .wish{
+  flex:0 0 100%;
+  scroll-snap-align:center;
+  scroll-snap-stop:always;
+  border:0;
+  padding:0 var(--pad);
+  animation:none;
+  display:flex; align-items:center;
+}
+.wishes--carousel .wish:last-child{ border-bottom:0; }
+
+.wishes--carousel .wish__card{
+  width:100%;
+  min-height:180px;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:28px 24px;
+  border:1px solid var(--line);
+  background:var(--paper);
+  position:relative;
+}
+.sec--gift .wishes--carousel .wish__card{ background:var(--paper-2); }
+
+/* An open quote mark, set in the display face */
+.wishes--carousel .wish__card::before{
+  content:"\201C";
+  position:absolute; top:6px; left:16px;
+  font-family:var(--display); font-size:44px; line-height:1;
+  color:var(--celadon); opacity:.35;
+}
+.wishes--carousel .wish__msg{
+  margin:0 0 16px; font-size:14.5px; line-height:2.05; color:var(--ink);
+  display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.wishes--carousel .wish__head{ gap:8px; }
+.wishes--carousel .wish__name{ font-size:13.5px; }
+.wishes--carousel .wish__time{ margin-top:6px; }
+
+/* Prev / count / next */
+.wishnav{
+  display:flex; align-items:center; justify-content:center; gap:18px;
+  margin-top:20px;
+}
+.wishnav__arrow{
+  width:34px; height:34px; border-radius:50%;
+  border:1px solid var(--line); background:none;
+  display:grid; place-items:center; color:var(--ink-2);
+  transition:border-color .3s var(--ease), color .3s var(--ease), opacity .3s;
+}
+.wishnav__arrow svg{ width:15px; height:15px; }
+.wishnav__arrow:hover{ border-color:var(--celadon); color:var(--celadon-2); }
+.wishnav__arrow[disabled]{ opacity:.3; pointer-events:none; }
+.wishnav__count{
+  font-family:var(--util); font-weight:300; font-size:11px;
+  letter-spacing:.2em; color:var(--ink-3);
+  font-variant-numeric:tabular-nums; min-width:56px; text-align:center;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .wishes--carousel{ scroll-behavior:auto; }
 }

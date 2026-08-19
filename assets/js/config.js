@@ -75,8 +75,18 @@ window.WEDDING_CONFIG = {
   // update the filenames below. Placeholder art is used until you do.
   media: {
     cover:   "assets/img/cover.webp",
-    portrait:{ groom: "assets/img/placeholder-groom.svg",
-               bride: "assets/img/placeholder-bride.svg" },
+
+    // Each person can have several photos. They slide across automatically.
+    // One photo is fine too — just leave a single item in the list.
+    portrait:{
+      groom: ["assets/img/placeholder-groom.svg",
+              "assets/img/placeholder-01.svg",
+              "assets/img/placeholder-03.svg"],
+      bride: ["assets/img/placeholder-bride.svg",
+              "assets/img/placeholder-02.svg",
+              "assets/img/placeholder-04.svg"]
+    },
+    portraitInterval: 3000,   // milliseconds between portrait photos
     gallery: [
       "assets/img/placeholder-01.svg",
       "assets/img/placeholder-02.svg",
@@ -91,7 +101,18 @@ window.WEDDING_CONFIG = {
     music:   "assets/audio/music.mp3"
   },
 
-  /* ---- 8. WORDS -------------------------------------------------------- */
+  /* ---- 8. SCROLLING -----------------------------------------------------
+     "snap" = one full screen per section, like flipping a page (PowerPoint feel).
+     "free" = ordinary continuous scrolling.
+     Change this one word and reload. Nothing else needs to change.      */
+  scrollMode: "snap",
+
+  /* ---- 9. WISHES DISPLAY -------------------------------------------------
+     "carousel" = one wish per swipe, left and right.
+     "list"     = all wishes stacked vertically.                          */
+  wishesStyle: "carousel",
+
+  /* ---- 10. WORDS -------------------------------------------------------- */
   copy: {
     eyebrow: "The Wedding Of",
     verse: "So they are no longer two, but one flesh.\nWhat God has joined together,\nlet no one separate.",
