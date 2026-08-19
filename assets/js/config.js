@@ -91,8 +91,6 @@ window.WEDDING_CONFIG = {
   media: {
     cover:   "assets/img/cover.webp",
 
-    // Each person can have several photos. They slide across automatically.
-    // One photo is fine too — just leave a single item in the list.
     // Page 1 reuses the cover photo so the opening transition is seamless.
     // Set a different file here only if you want them to differ.
     hero: "",
@@ -100,22 +98,30 @@ window.WEDDING_CONFIG = {
     // One full-page photo each. Portrait orientation, shot with space at the
     // bottom — the name and family sit over the lower third.
     portrait:{
-      groom: "assets/img/placeholder-groom.svg",
-      bride: "assets/img/placeholder-bride.svg"
+      groom: "assets/img/groom.webp",
+      bride: "assets/img/bride.webp"
     },
 
+    // Photo of the venue, shown on the Location page above the map.
+    // Leave "" and the slot stays hidden.
+    venue: "assets/img/venue.webp",
+
     // The "With Joy" page slides through these automatically.
-    invite: ["assets/img/placeholder-01.svg",
-             "assets/img/placeholder-02.svg",
-             "assets/img/placeholder-03.svg"],
+    invite: ["assets/img/with-joy-1.webp",
+             "assets/img/with-joy-2.webp",
+             "assets/img/with-joy-3.webp",
+             "assets/img/with-joy-4.webp",
+             "assets/img/with-joy-5.webp"],
     portraitInterval: 3000,   // milliseconds between "With Joy" photos
+
     gallery: [
-      "assets/img/placeholder-01.svg",
-      "assets/img/placeholder-02.svg",
-      "assets/img/placeholder-03.svg",
-      "assets/img/placeholder-04.svg"
+      "assets/img/gallery-1.webp",
+      "assets/img/gallery-2.webp",
+      "assets/img/gallery-3.webp",
+      "assets/img/gallery-4.webp"
     ],
-    closing: "assets/img/placeholder-closing.svg",
+    closing: "assets/img/closing.webp",
+
     // Background music. Leave "" to hide the music button.
     music:   "assets/audio/music.mp3"
   },

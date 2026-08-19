@@ -11,6 +11,14 @@
     var nodes = document.querySelectorAll('[data-c="' + key + '"]');
     for (var i = 0; i < nodes.length; i++) nodes[i].textContent = value;
   };
+  // "XXX" placeholders should not show on the live invitation
+  var blank = function (v) {
+    return !v || /^x{2,}$/i.test(String(v).trim());
+  };
+  var showIf = function (key, value) {
+    var nodes = document.querySelectorAll('[data-c="' + key + '"]');
+    for (var i = 0; i < nodes.length; i++) nodes[i].hidden = blank(value);
+  };
   var esc = function (s) {
     return String(s == null ? "" : s)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -61,8 +69,12 @@
     setAll("dateLabel", C.dateLabel || "");
     setAll("timeLabel", C.timeLabel || "");
     setAll("dressCode", C.dressCode || "");
-    setAll("venueName", v.name || ""); setAll("venueHall", v.hall || "");
-    setAll("venueAddr", v.address || ""); setAll("venueArea", v.area || "");
+    setAll("venueName", v.name || "");
+    setAll("venueHall", blank(v.hall) ? "" : v.hall);
+    setAll("venueAddr", blank(v.address) ? "" : v.address);
+    setAll("venueArea", v.area || "");
+    showIf("venueHall", v.hall);
+    showIf("venueAddr", v.address);
     setAll("deadline", C.rsvpDeadline || "");
     setAll("giftIntro", (C.gift || {}).intro || "");
 
@@ -85,6 +97,11 @@
     // Page 1 reuses the cover photo, so lifting the cover reveals the same
     // image already in place underneath — the join is invisible.
     set("heroImg", m.hero || m.cover, "");
+
+    if (m.venue) {
+      $("venuePhoto").hidden = false;
+      set("venueImg", m.venue, (C.venue || {}).name);
+    }
 
     var p = m.portrait || {};
     set("groomImg", first(p.groom), (C.groom || {}).fullName);
